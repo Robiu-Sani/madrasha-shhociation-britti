@@ -12,6 +12,7 @@ import {
   Menu,
   ChevronDown,
   ChevronRight,
+  ClipboardPlus,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -32,6 +33,47 @@ const navItems: NavItem[] = [
     name: "Home",
     icon: <Home size={20} />,
     href: "/",
+  },
+  {
+    name: "Create Information",
+    icon: <ClipboardPlus size={20} />,
+    subItems: [
+      {
+        name: "Contact Data",
+        icon: <ClipboardPlus size={16} />,
+        href: "/dashboard/create/additional",
+      },
+      {
+        name: "Add Center",
+        icon: <ClipboardPlus size={16} />,
+        href: "/dashboard/create/branch-center",
+      },
+      {
+        name: "Add Class",
+        icon: <ClipboardPlus size={16} />,
+        href: "/dashboard/create/class",
+      },
+      {
+        name: "Add Exam",
+        icon: <ClipboardPlus size={16} />,
+        href: "/dashboard/create/exam",
+      },
+      {
+        name: "Add Group",
+        icon: <ClipboardPlus size={16} />,
+        href: "/dashboard/create/group",
+      },
+      {
+        name: "Add Institution",
+        icon: <ClipboardPlus size={16} />,
+        href: "/dashboard/create/institution",
+      },
+      {
+        name: "Add Suggestion",
+        icon: <ClipboardPlus size={16} />,
+        href: "/dashboard/create/suggestion",
+      },
+    ],
   },
   {
     name: "Users",

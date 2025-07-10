@@ -28,11 +28,14 @@ export default function DashboardLayout({
           </div>
           <div className="w-full h-[40px] bg-gray-200 shadow rounded flex items-center justify-between px-4 text-sm text-gray-600">
             <span>
-              © {new Date().getFullYear()} Your Company Name. All rights
-              reserved.
+              © {new Date().getFullYear()} Code-biruni. All rights reserved.
             </span>
             <div className="flex items-center gap-4">
-              <Link href={"/"}>contact us</Link>
+              <Link
+                href={"https://code-biruny.vercel.app/pages/company/contact"}
+              >
+                contact us
+              </Link>
             </div>
           </div>
         </div>
