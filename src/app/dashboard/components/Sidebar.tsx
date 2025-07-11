@@ -86,32 +86,32 @@ const navItems: NavItem[] = [
         href: "/dashboard/created-data/additional",
       },
       {
-        name: "Add Center",
+        name: "Added Center",
         icon: <Album size={16} />,
         href: "/dashboard/created-data/branch-center",
       },
       {
-        name: "Add Class",
+        name: "Added Class",
         icon: <Album size={16} />,
         href: "/dashboard/created-data/class",
       },
       {
-        name: "Add Exam",
+        name: "Added Exam",
         icon: <Album size={16} />,
         href: "/dashboard/created-data/exam",
       },
       {
-        name: "Add Group",
+        name: "Added Group",
         icon: <Album size={16} />,
         href: "/dashboard/created-data/group",
       },
       {
-        name: "Add Institution",
+        name: "Added Institution",
         icon: <Album size={16} />,
         href: "/dashboard/created-data/institution",
       },
       {
-        name: "Add Suggestion",
+        name: "Added Suggestion",
         icon: <Album size={16} />,
         href: "/dashboard/created-data/suggestion",
       },
