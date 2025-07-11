@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Sidebar from "./components/Sidebar";
 import Link from "next/link";
 import DashboardHeader from "./components/DashboardHeader";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,6 +16,7 @@ export default function DashboardLayout({
 }>) {
   return (
     <div className="w-full h-screen fixed top-0 left-0 z-[100000] bg-white flex flex-col gap-[6px]">
+      <Toaster />
       <div className="w-full bg-gray-100 shadow flex justify-center items-center h-[55px]">
         <DashboardHeader />
       </div>

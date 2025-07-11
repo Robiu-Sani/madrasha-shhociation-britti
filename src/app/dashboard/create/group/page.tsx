@@ -1,5 +1,10 @@
 import React from "react";
+import CreateGroupForm from "./CreateGroupFrom";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <CreateGroupForm />
+    </div>
+  );
 }

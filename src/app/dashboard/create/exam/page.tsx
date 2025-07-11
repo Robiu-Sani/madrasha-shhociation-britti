@@ -1,5 +1,10 @@
 import React from "react";
+import CreateExamForm from "./CreateExamForm";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <CreateExamForm />
+    </div>
+  );
 }

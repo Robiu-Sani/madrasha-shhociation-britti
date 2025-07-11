@@ -1,3 +1,9 @@
+import CreateClassForm from "./CreateClassForm";
+
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <CreateClassForm />
+    </div>
+  );
 }

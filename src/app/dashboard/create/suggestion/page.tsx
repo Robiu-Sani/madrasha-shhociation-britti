@@ -1,5 +1,10 @@
 import React from "react";
+import CreateSuggestionForm from "./CreateSuggectionForm";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <CreateSuggestionForm />
+    </div>
+  );
 }
