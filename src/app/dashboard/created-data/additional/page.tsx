@@ -1,5 +1,10 @@
 import React from "react";
+import ContactDataData from "./ContactDataData";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <ContactDataData />
+    </div>
+  );
 }
