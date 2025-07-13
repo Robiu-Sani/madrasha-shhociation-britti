@@ -15,7 +15,8 @@ export default function Banner() {
             </span>
 
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
-              বাংলাদেশ প্রাইভেট মাদ্রাসা ওয়েলফেয়ার এসোসিয়েশন
+              বাংলাদেশ প্রাইভেট মাদ্রাসা{" "}
+              <span className="text-emerald-700">ওয়েলফেয়ার এসোসিয়েশন</span>
             </h1>
 
             <p className="text-gray-700 text-lg mb-8">

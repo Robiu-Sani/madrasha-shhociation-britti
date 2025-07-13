@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import HomeNavBar from "./_default/HomeNavBar";
 import HomeFooter from "./_default/HomeFooter";
+import AosWrapper from "./AosWrapper";
 
 // ✅ TiroBangla
 const tiroBangla = Tiro_Bangla({
@@ -39,10 +40,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${tiroBangla.variable} antialiased`}
       >
-        <Toaster />
-        <HomeNavBar />
-        {children}
-        <HomeFooter />
+        <AosWrapper>
+          <Toaster />
+          <HomeNavBar />
+          {children}
+          <HomeFooter />
+        </AosWrapper>
       </body>
     </html>
   );
