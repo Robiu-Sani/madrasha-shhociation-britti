@@ -1,13 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Tiro_Bangla } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import HomeNavBar from "./_default/HomeNavBar";
+import HomeFooter from "./_default/HomeFooter";
 
+// ✅ TiroBangla
+const tiroBangla = Tiro_Bangla({
+  weight: "400",
+  subsets: ["latin", "bengali"], // যদি বাংলা থাকে, তবে এটা ভালো
+  variable: "--font-tiro-bangla",
+});
+
+// ✅ Geist Sans
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
+// ✅ Geist Mono
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -26,10 +37,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${tiroBangla.variable} antialiased`}
       >
         <Toaster />
+        <HomeNavBar />
         {children}
+        <HomeFooter />
       </body>
     </html>
   );

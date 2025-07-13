@@ -80,7 +80,7 @@ export default function AllBranch({ data }: any) {
           </p>
         </div>
         <Link
-          href="/dashboard/branches/create"
+          href="/dashboard/create/branch-center"
           className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
         >
           <Plus className="h-5 w-5 mr-2" />
@@ -115,7 +115,7 @@ export default function AllBranch({ data }: any) {
                 </div>
                 <div className="flex space-x-2">
                   <Link
-                    href={`/dashboard/branches/edit/${branch._id}`}
+                    href={`/dashboard/created-data/branch-center/${branch._id}`}
                     className="p-2 text-blue-600 hover:text-blue-800 rounded-full hover:bg-blue-50 transition"
                     title="Edit"
                   >
@@ -186,7 +186,7 @@ export default function AllBranch({ data }: any) {
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-[#000000bd] bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center mb-4">
