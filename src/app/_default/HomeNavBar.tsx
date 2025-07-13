@@ -7,6 +7,10 @@ import {
   UserPlus,
   BookOpen,
   GraduationCap,
+  ArrowUpNarrowWide,
+  University,
+  LibraryBig,
+  Contact,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,10 +22,22 @@ const HomeNavBar = () => {
   const menuItems = [
     { name: "হোম", path: "/", icon: <BookOpen size={16} /> },
     { name: "ভূমিকা", path: "/roles", icon: <GraduationCap size={16} /> },
-    { name: "প্রগতি", path: "/progress" },
-    { name: "প্রতিষ্ঠান", path: "/institutions" },
-    { name: "আমাদের সম্পর্কে", path: "/about-us" },
-    { name: "যোগাযোগ", path: "/contact" },
+    {
+      name: "প্রগতি",
+      path: "/progress",
+      icon: <ArrowUpNarrowWide size={16} />,
+    },
+    {
+      name: "প্রতিষ্ঠান",
+      path: "/institutions",
+      icon: <University size={16} />,
+    },
+    {
+      name: "আমাদের সম্পর্কে",
+      path: "/about-us",
+      icon: <LibraryBig size={16} />,
+    },
+    { name: "যোগাযোগ", path: "/contact", icon: <Contact size={16} /> },
   ];
 
   const renderMenuButtons = (
@@ -33,7 +49,9 @@ const HomeNavBar = () => {
           onClick={() => setIsOpen(false)}
           className="flex items-center gap-1 px-2 py-1 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200 hover:bg-blue-50/50 rounded-lg animate__animated animate__fadeIn"
         >
-          {item.icon && <span className="text-blue-500">{item.icon}</span>}
+          {item.icon && (
+            <span className="text-blue-500 hidden">{item.icon}</span>
+          )}
           {item.name}
         </Link>
       ))}
