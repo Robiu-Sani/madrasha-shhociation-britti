@@ -74,9 +74,9 @@ const HomeNavBar = () => {
         <button className="relative h-9 w-9 flex items-center justify-center rounded-full bg-white border border-blue-200 text-blue-600 shadow-sm hover:shadow-md transition-all duration-300 group">
           <LogIn
             size={16}
-            className="group-hover:scale-110 transition-transform"
+            className="group-hover:scale-110 text-blue-600 transition-transform"
           />
-          <span className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></span>
+          {/* <span className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></span> */}
         </button>
       </Link>
     </div>

@@ -1,5 +1,12 @@
 import React from "react";
+import ResultBanner from "./ResultBanner";
+import ExamResultForm from "./ExamResultForm";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <ResultBanner />
+      <ExamResultForm />
+    </div>
+  );
 }
