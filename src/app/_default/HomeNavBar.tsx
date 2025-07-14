@@ -28,8 +28,8 @@ const HomeNavBar = () => {
       icon: <ArrowUpNarrowWide size={16} />,
     },
     {
-      name: "প্রতিষ্ঠান",
-      path: "/institutions",
+      name: "রেজাল্ট",
+      path: "/result",
       icon: <University size={16} />,
     },
     {
