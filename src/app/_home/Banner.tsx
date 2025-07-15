@@ -51,7 +51,7 @@ export default function Banner() {
 
           {/* Right Side - Simplified Card */}
           <div className="animate__animated w-full flex justify-center items-center md:justify-end animate__fadeInRight animate__delay-1s">
-            <div className="bg-white w-[70%] rounded-xl p-6 shadow-lg border border-gray-100">
+            <div className="bg-white w-full md:w-[70%] rounded-xl p-6 shadow-lg border border-gray-100">
               <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
                 আমাদের মূল কর্মসূচি
               </h3>

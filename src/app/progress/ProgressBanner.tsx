@@ -33,7 +33,7 @@ const ProgressBanner = () => {
   ];
 
   return (
-    <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
+    <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-emerald-50 to-teal-100">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">

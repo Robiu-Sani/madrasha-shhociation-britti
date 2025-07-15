@@ -9,7 +9,7 @@ import {
 
 const AboutUsBanner = () => {
   return (
-    <div className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-slate-50 to-slate-100 overflow-hidden">
+    <div className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-emerald-50 to-teal-100 overflow-hidden">
       {/* Islamic Pattern Overlay */}
       <div className="absolute inset-0 opacity-10">
         <div
