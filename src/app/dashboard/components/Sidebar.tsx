@@ -14,6 +14,7 @@ import {
   ChevronRight,
   ClipboardPlus,
   Album,
+  UserPlus,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -114,6 +115,22 @@ const navItems: NavItem[] = [
         name: "Added Suggestion",
         icon: <Album size={16} />,
         href: "/dashboard/created-data/suggestion",
+      },
+    ],
+  },
+  {
+    name: "Add A User",
+    icon: <UserPlus size={20} />,
+    subItems: [
+      {
+        name: "Add A Member",
+        icon: <UserPlus size={16} />,
+        href: "/dashboard/create-user/menagement",
+      },
+      {
+        name: "Add User",
+        icon: <UserPlus size={16} />,
+        href: "/dashboard/create-user/menagement",
       },
     ],
   },
