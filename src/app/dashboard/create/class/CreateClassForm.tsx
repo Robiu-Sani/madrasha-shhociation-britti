@@ -32,7 +32,7 @@ export default function CreateClassForm() {
     const fetchBranches = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_V1}/group`
+          `${process.env.NEXT_PUBLIC_SERVER_V1}/branch`
         );
         setBranches(response.data.data);
       } catch (error) {

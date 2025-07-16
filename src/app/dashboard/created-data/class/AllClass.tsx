@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   Edit2,
   Trash2,
@@ -12,6 +12,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import Link from "next/link";
 
 interface ClassData {
   _id: string;
@@ -184,8 +185,6 @@ export default function AllClass({ data: initialData }: AllClassProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Toaster position="top-right" />
-
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -223,13 +222,14 @@ export default function AllClass({ data: initialData }: AllClassProps) {
             <h2 className="text-2xl font-bold text-gray-800">
               Class Management
             </h2>
-            <button
-              onClick={() => setIsAdding(true)}
+            <Link
+              href={"/dashboard/create/class"}
+              // onClick={() => setIsAdding(true)}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center"
             >
               <Plus className="mr-2" size={16} />
               Add Class
-            </button>
+            </Link>
           </div>
         </div>
 
