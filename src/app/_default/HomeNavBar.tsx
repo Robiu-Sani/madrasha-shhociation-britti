@@ -92,10 +92,10 @@ const HomeNavBar = () => {
               <Link href="/" className="flex justify-start items-center gap-2">
                 <Image
                   src="/logo.jpg"
-                  width={120}
+                  width={40}
                   height={40}
                   alt="Logo"
-                  className="h-10 w-auto"
+                  className="h-10 rounded-full w-auto"
                 />
                 <h1 className="font-bold leading-tight">
                   <span className="text-xl block bg-gradient-to-r from-blue-600 via-green-500 to-purple-600 bg-clip-text text-transparent leading-[1]">
@@ -141,7 +141,7 @@ const HomeNavBar = () => {
                   width={100}
                   height={35}
                   alt="Logo"
-                  className="h-8 w-auto"
+                  className="h-8 rounded-full w-auto"
                 />
                 <button
                   onClick={() => setIsOpen(false)}
