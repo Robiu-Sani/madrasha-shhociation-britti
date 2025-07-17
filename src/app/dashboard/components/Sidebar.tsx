@@ -210,13 +210,15 @@ export default function Sidebar() {
       {/* Toggle Button */}
       <div className="flex bg-gray-100 shadow rounded items-center sm:justify-between p-2 justify-center">
         {isExpanded && (
-          <h1 className="text-xl font-semibold tracking-tight">My Dashboard</h1>
+          <h1 className="text-xl text-gray-600 font-semibold tracking-tight">
+            My Dashboard
+          </h1>
         )}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="p-2 rounded-md hover:bg-gray-100 cursor-pointer transition-colors"
         >
-          <Menu size={20} />
+          <Menu size={20} className="text-gray-900" />
         </button>
       </div>
 

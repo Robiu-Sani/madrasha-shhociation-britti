@@ -2,8 +2,14 @@
 @plugin "daisyui";
 @import "animate.css";
 
-* {
+/* * {
   color: rgb(37, 37, 37);
+} */
+input::placeholder {
+  color: rgb(51, 51, 51) !important;
+}
+body {
+  background: #f3f3f3 !important;
 }
 
 .animate-float {
