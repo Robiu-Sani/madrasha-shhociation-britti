@@ -33,7 +33,7 @@ interface FormData {
   };
   fatherName?: string;
   motherName?: string;
-  center?: string;
+  // center?: string;
   image?: string;
   institution: string;
   branch: string;
@@ -68,7 +68,7 @@ export default function CreateStudent({
       },
       fatherName: "",
       motherName: "",
-      center: "",
+      // center: "",
       image: "",
       institution: "",
       branch: "",
@@ -101,7 +101,7 @@ export default function CreateStudent({
         address: data.address,
         fatherName: data.fatherName || undefined,
         motherName: data.motherName || undefined,
-        center: data.center || undefined,
+        // center: data.center || undefined,
         image:
           image ||
           "https://img.freepik.com/free-vector/user-blue-gradient_78370-4692.jpg",
@@ -132,8 +132,8 @@ export default function CreateStudent({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="w-full max-w-4xl mx-auto">
+    <div className="min-h-screen  p-6">
+      <div className="w-full  mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Create Student</h1>
@@ -147,7 +147,7 @@ export default function CreateStudent({
           </Link>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+        <div className="w-full p-0 md:p-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Branch */}
@@ -501,24 +501,13 @@ export default function CreateStudent({
                 )}
               </div>
 
-              {/* Center */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <MapPin className="h-4 w-4 inline mr-1" /> Center (Optional)
-                </label>
-                <Controller
-                  name="center"
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="text"
-                      className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"
-                      placeholder="Enter center name"
-                    />
-                  )}
-                />
-              </div>
+              {/* Center   
+              
+              
+  console.log(centername[0]);
+              
+              
+              */}
 
               {/* Present Address */}
               <div>
