@@ -19,6 +19,10 @@ import "animate.css";
 const HomeNavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  //  useEffect(() => {
+  //   document.querySelector("html").setAttribute("data-theme", '');
+  // }, [theme]);
+
   const menuItems = [
     { name: "হোম", path: "/", icon: <BookOpen size={16} /> },
     { name: "ভূমিকা", path: "/roles", icon: <GraduationCap size={16} /> },
