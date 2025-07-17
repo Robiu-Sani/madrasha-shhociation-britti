@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   User,
   Users,
@@ -15,81 +15,9 @@ import {
   Building,
   ChevronDown,
   Loader2,
-  Upload,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-
-interface Branch {
-  _id: string;
-  id: string;
-  name: string;
-  address: string;
-  isDeleted: boolean;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
-interface Institution {
-  _id: string;
-  id: string;
-  name: string;
-  address: string;
-  branch: Branch;
-  isDeleted: boolean;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
-interface Class {
-  _id: string;
-  id: string;
-  name: string;
-  isDeleted: boolean;
-  branch: Branch | null;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
-interface Group {
-  _id: string;
-  id: string;
-  name: string;
-  isDeleted: boolean;
-  fromClass: string;
-  toClass: string;
-  syllabus: Array<{
-    name: string;
-    description: string;
-    _id: string;
-  }>;
-  exam: Array<{
-    _id: string;
-    name: string;
-    date: string;
-    releaseDate: string;
-    registrationStart: string;
-    registrationEnd: string;
-    fees: number;
-    subjects: string[];
-    groups: Array<{
-      groupName: string;
-      description: string;
-      _id: string;
-    }>;
-    class: string[];
-    isDeleted: boolean;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  }>;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
 
 interface FormData {
   name: string;
@@ -101,68 +29,51 @@ interface FormData {
     present: string;
     permanent: string;
   };
-  fatherName: string;
-  motherName: string;
-  center: string;
-  image: string;
+  fatherName?: string;
+  motherName?: string;
+  center?: string;
+  image?: string;
   institution: string;
   branch: string;
   studentClass: string;
 }
 
-interface CreateStudentProps {
-  institution: Institution[];
-  branch: Branch[];
-  class: Class[];
-  group: Group[];
+interface ImageUploadProps {
+  onUpload: (url: string) => void;
 }
 
-const ImageUpload: React.FC<{
-  onUpload: (url: string) => void;
-}> = ({ onUpload }) => {
-  const [uploading, setUploading] = useState(false);
-
+// Basic ImageUpload component (replace with your actual implementation)
+const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setUploading(true);
+    // Simulate image upload (replace with actual Cloudinary or other service)
     try {
-      // Simulate image upload (replace with actual upload logic, e.g., to a cloud service like Cloudinary)
       const formData = new FormData();
       formData.append("file", file);
-      // Example: Replace with actual API endpoint for image upload
-      const response = await axios.post("/api/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      const imageUrl = response.data.url; // Adjust based on actual API response
-      onUpload(imageUrl);
+      // Example: Replace with your actual upload endpoint
+      // const response = await axios.post("https://api.cloudinary.com/v1_1/your-cloud-name/image/upload", formData);
+      // onUpload(response.data.secure_url);
+
+      // Placeholder: Simulate upload with a fake URL
+      const fakeUrl = URL.createObjectURL(file);
+      onUpload(fakeUrl);
       toast.success("Image uploaded successfully!");
     } catch (error) {
       toast.error("Failed to upload image");
       console.error("Image upload error:", error);
-    } finally {
-      setUploading(false);
     }
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <label
-        className={`flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 cursor-pointer hover:bg-gray-50 transition ${
-          uploading ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-      >
-        <Upload className="h-4 w-4" />
-        {uploading ? "Uploading..." : "Upload Image"}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="hidden"
-          disabled={uploading}
-        />
-      </label>
+    <div className="flex items-center">
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"
+      />
     </div>
   );
 };
@@ -170,10 +81,13 @@ const ImageUpload: React.FC<{
 export default function CreateStudent({
   institution,
   branch,
-  class: classes,
   group,
-}: CreateStudentProps) {
-  const [image, setImage] = useState("");
+}: {
+  institution: any[];
+  branch: any[];
+  group: any[];
+}) {
+  const [image, setImage] = useState<string>("");
   const {
     control,
     handleSubmit,
@@ -209,11 +123,10 @@ export default function CreateStudent({
     (inst) => inst.branch._id === selectedBranch
   );
 
-  // Reset institution and class when branch changes
-  React.useEffect(() => {
+  // Reset institution when branch changes
+  useEffect(() => {
     if (selectedBranch) {
       setValue("institution", "");
-      setValue("studentClass", "");
     }
   }, [selectedBranch, setValue]);
 
@@ -226,22 +139,29 @@ export default function CreateStudent({
         gender: data.gender,
         dateOfBirth: data.dateOfBirth,
         address: data.address,
-        fatherName: data.fatherName,
-        motherName: data.motherName,
-        center: data.center,
+        fatherName: data.fatherName || undefined,
+        motherName: data.motherName || undefined,
+        center: data.center || undefined,
         image:
-          data.image ||
+          image ||
           "https://img.freepik.com/free-vector/user-blue-gradient_78370-4692.jpg",
         branch: data.branch,
         institution: data.institution,
         studentClass: data.studentClass,
       };
-      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_V1}/student`, payload);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_V1}/student`,
+        payload
+      );
       toast.success("Student created successfully!");
       reset();
       setImage("");
+      return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to create student");
+      const errorMessage =
+        error.response?.data?.message || "Failed to create student";
+      toast.error(errorMessage);
       console.error("Create error:", error);
     }
   };
@@ -253,8 +173,7 @@ export default function CreateStudent({
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <Toaster position="top-right" />
-      <div className="max-w-3xl mx-auto">
+      <div className="w-full max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">Create Student</h1>
@@ -289,7 +208,7 @@ export default function CreateStudent({
                         }`}
                       >
                         <option value="">Select branch</option>
-                        {branch.map((b: Branch) => (
+                        {branch.map((b) => (
                           <option key={b._id} value={b._id}>
                             {b.name} ({b.id})
                           </option>
@@ -327,7 +246,7 @@ export default function CreateStudent({
                         disabled={!selectedBranch}
                       >
                         <option value="">Select institution</option>
-                        {filteredInstitutions.map((inst: Institution) => (
+                        {filteredInstitutions.map((inst) => (
                           <option key={inst._id} value={inst._id}>
                             {inst.name} ({inst.id})
                           </option>
@@ -364,9 +283,9 @@ export default function CreateStudent({
                         }`}
                       >
                         <option value="">Select class</option>
-                        {classes.map((c: Class) => (
-                          <option key={c._id} value={c._id}>
-                            {c.name} ({c.id})
+                        {group.map((g) => (
+                          <option key={g._id} value={g._id}>
+                            {g.name} ({g.id})
                           </option>
                         ))}
                       </select>
@@ -416,7 +335,13 @@ export default function CreateStudent({
                 <Controller
                   name="number"
                   control={control}
-                  rules={{ required: "Phone number is required" }}
+                  rules={{
+                    required: "Phone number is required",
+                    pattern: {
+                      value: /^\+?[1-9]\d{1,14}$/,
+                      message: "Invalid phone number format",
+                    },
+                  }}
                   render={({ field }) => (
                     <input
                       {...field}
@@ -424,7 +349,7 @@ export default function CreateStudent({
                       className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.number ? "border-red-500" : "border-gray-300"
                       }`}
-                      placeholder="Enter phone number"
+                      placeholder="Enter phone number (e.g., +1234567890)"
                     />
                   )}
                 />
@@ -443,7 +368,13 @@ export default function CreateStudent({
                 <Controller
                   name="email"
                   control={control}
-                  rules={{ required: "Email is required" }}
+                  rules={{
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "Invalid email format",
+                    },
+                  }}
                   render={({ field }) => (
                     <input
                       {...field}
@@ -526,7 +457,7 @@ export default function CreateStudent({
               {/* Father's Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <Users className="h-4 w-4 inline mr-1" /> Father's Name
+                  <Users className="h-4 w-4 inline mr-1" /> Father&apos;s Name
                 </label>
                 <Controller
                   name="fatherName"
@@ -538,7 +469,7 @@ export default function CreateStudent({
                       className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.fatherName ? "border-red-500" : "border-gray-300"
                       }`}
-                      placeholder="Enter father's name"
+                      placeholder="Enter father's name (optional)"
                     />
                   )}
                 />
@@ -552,7 +483,7 @@ export default function CreateStudent({
               {/* Mother's Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <Users className="h-4 w-4 inline mr-1" /> Mother's Name
+                  <Users className="h-4 w-4 inline mr-1" /> Mother&apos;s Name
                 </label>
                 <Controller
                   name="motherName"
@@ -564,7 +495,7 @@ export default function CreateStudent({
                       className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         errors.motherName ? "border-red-500" : "border-gray-300"
                       }`}
-                      placeholder="Enter mother's name"
+                      placeholder="Enter mother's name (optional)"
                     />
                   )}
                 />
@@ -666,21 +597,19 @@ export default function CreateStudent({
                         height={135}
                         src={image}
                         alt="Student profile photo"
-                        className="h-[135px] rounded-xl object-cover"
+                        className="h-[135px] w-[135px] object-cover rounded-xl"
                       />
                     </div>
                   )}
                   <div className="flex items-center gap-4">
                     <ImageUpload onUpload={handleImageUpload} />
-                    <Controller
-                      name="image"
-                      control={control}
-                      render={({ field }) => (
-                        <input {...field} type="hidden" value={image} />
-                      )}
-                    />
                   </div>
                 </div>
+                {errors.image && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.image.message}
+                  </p>
+                )}
               </div>
             </div>
 
