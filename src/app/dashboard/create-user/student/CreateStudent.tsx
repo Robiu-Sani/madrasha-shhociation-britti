@@ -24,6 +24,7 @@ interface FormData {
   name: string;
   number: string;
   email: string;
+  group: string;
   gender: "male" | "female" | "other";
   dateOfBirth: string;
   address: {
@@ -39,7 +40,12 @@ interface FormData {
   studentClass: string;
 }
 
-export default function CreateStudent({ institution, branch, group }: any) {
+export default function CreateStudent({
+  institution,
+  branch,
+  group,
+  classes,
+}: any) {
   const [image, setImage] = useState<string>("");
   const {
     control,
@@ -53,6 +59,7 @@ export default function CreateStudent({ institution, branch, group }: any) {
       name: "",
       number: "",
       email: "",
+      group: "",
       gender: "" as "male" | "female" | "other",
       dateOfBirth: "",
       address: {
@@ -219,6 +226,41 @@ export default function CreateStudent({ institution, branch, group }: any) {
               {/* Class */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <Building className="h-4 w-4 inline mr-1" /> Group
+                </label>
+                <div className="relative">
+                  <Controller
+                    name="group"
+                    control={control}
+                    rules={{ required: "group is required" }}
+                    render={({ field }) => (
+                      <select
+                        {...field}
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none ${
+                          errors.group ? "border-red-500" : "border-gray-300"
+                        }`}
+                      >
+                        <option value="">Select Group</option>
+                        {group.map((g: any) => (
+                          <option key={g._id} value={g._id}>
+                            {g.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  />
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                </div>
+                {errors.group && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.group.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Class */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   <Building className="h-4 w-4 inline mr-1" /> Class
                 </label>
                 <div className="relative">
@@ -236,7 +278,7 @@ export default function CreateStudent({ institution, branch, group }: any) {
                         }`}
                       >
                         <option value="">Select class</option>
-                        {group.map((g: any) => (
+                        {classes.map((g: any) => (
                           <option key={g._id} value={g._id}>
                             {g.name} ({g.id})
                           </option>

@@ -15,7 +15,7 @@ export default async function page() {
       <CreateStudent
         institution={institution.data.data}
         branch={branch.data.data}
-        class={classes.data.data.classes}
+        classes={classes.data.data.classes}
         group={group.data.data.groups}
       />
     </div>
