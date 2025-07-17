@@ -128,9 +128,9 @@ const navItems: NavItem[] = [
         href: "/dashboard/create-user/menagement",
       },
       {
-        name: "Add User",
+        name: "Add A Student",
         icon: <UserPlus size={16} />,
-        href: "/dashboard/create-user/menagement",
+        href: "/dashboard/create-user/student",
       },
     ],
   },

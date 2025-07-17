@@ -1,5 +1,13 @@
 import React from "react";
-import { BookOpenText, Users, Award, Globe } from "lucide-react";
+import {
+  BookOpenText,
+  Users,
+  Award,
+  Globe,
+  Phone,
+  UserPlus,
+} from "lucide-react";
+import Link from "next/link";
 
 const TeacherEngagement = () => {
   return (
@@ -115,9 +123,27 @@ const TeacherEngagement = () => {
                 <li>প্রশিক্ষণ প্রোগ্রামে অংশগ্রহণ</li>
                 <li>চূড়ান্ত অনুমোদন</li>
               </ol>
-              <button className="mt-6 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-500 text-white rounded-lg font-bold hover:shadow-lg transition-all">
-                এখনই আবেদন করুন
-              </button>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/contact">
+                  <button className="relative overflow-hidden h-11 px-6 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 group">
+                    <span className="relative z-10 flex items-center gap-2">
+                      <Phone size={16} />
+                      যোগাযোগ করুন
+                    </span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  </button>
+                </Link>
+
+                <Link href="/register">
+                  <button className="relative overflow-hidden h-11 px-6 rounded-full bg-white text-emerald-600 text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 group border-2 border-emerald-500">
+                    <span className="relative z-10 flex items-center gap-2">
+                      <UserPlus size={16} />
+                      নিবন্ধন
+                    </span>
+                    <span className="absolute inset-0 bg-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

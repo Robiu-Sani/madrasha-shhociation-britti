@@ -1,6 +1,7 @@
 import React from "react";
 import "animate.css";
-import { Award, BookOpen, Phone, ChevronDown } from "lucide-react";
+import { Award, BookOpen, Phone, ChevronDown, UserPlus } from "lucide-react";
+import Link from "next/link";
 
 const ResultBanner = () => {
   return (
@@ -39,15 +40,26 @@ const ResultBanner = () => {
 
         {/* Action Buttons */}
         <div className="animate__animated animate__fadeIn animate__delay-2s">
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="px-6 py-3 bg-gradient-to-r from-green-500 to-indigo-500 text-white rounded-lg font-medium hover:from-green-600 hover:to-indigo-600 transition-all shadow-md hover:shadow-lg flex items-center justify-center">
-              <Phone className="w-5 h-5 mr-2" />
-              Contact Examiner
-            </button>
-            <button className="px-6 py-3 bg-white text-green-600 border border-green-200 rounded-lg font-medium hover:bg-green-50 transition-all shadow-sm hover:shadow-md flex items-center justify-center">
-              View Details
-              <ChevronDown className="w-5 h-5 ml-2" />
-            </button>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/contact">
+              <button className="relative overflow-hidden h-11 px-6 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 group">
+                <span className="relative z-10 flex items-center gap-2">
+                  <Phone size={16} />
+                  যোগাযোগ করুন
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </button>
+            </Link>
+
+            <Link href="/register">
+              <button className="relative overflow-hidden h-11 px-6 rounded-full bg-white text-emerald-600 text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 group border-2 border-emerald-500">
+                <span className="relative z-10 flex items-center gap-2">
+                  <UserPlus size={16} />
+                  নিবন্ধন
+                </span>
+                <span className="absolute inset-0 bg-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </button>
+            </Link>
           </div>
         </div>
 

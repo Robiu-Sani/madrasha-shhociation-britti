@@ -1,5 +1,14 @@
 import React from "react";
-import { Target, Users, BookOpenCheck, Globe, Star } from "lucide-react";
+import {
+  Target,
+  Users,
+  BookOpenCheck,
+  Globe,
+  Star,
+  Phone,
+  UserPlus,
+} from "lucide-react";
+import Link from "next/link";
 
 const FutureGoals = () => {
   const goals = [
@@ -105,16 +114,25 @@ const FutureGoals = () => {
               আপনার সক্ষমতা অনুযায়ী শিক্ষক, স্বেচ্ছাসেবক বা দাতা হিসেবে আমাদের
               সাথে যুক্ত হোন
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button className="px-6 py-3 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 transition-colors">
-                শিক্ষক রেজিস্ট্রেশন
-              </button>
-              <button className="px-6 py-3 bg-white text-emerald-600 border border-emerald-600 rounded-lg font-bold hover:bg-emerald-50 transition-colors">
-                স্বেচ্ছাসেবক হোন
-              </button>
-              <button className="px-6 py-3 bg-teal-600 text-white rounded-lg font-bold hover:bg-teal-700 transition-colors">
-                দান করুন
-              </button>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/contact">
+                <button className="relative overflow-hidden h-11 px-6 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 group">
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Phone size={16} />
+                    যোগাযোগ করুন
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </button>
+              </Link>
+              <Link href="/register">
+                <button className="relative overflow-hidden h-11 px-6 rounded-full bg-white text-emerald-600 text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 group border-2 border-emerald-500">
+                  <span className="relative z-10 flex items-center gap-2">
+                    <UserPlus size={16} />
+                    নিবন্ধন
+                  </span>
+                  <span className="absolute inset-0 bg-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </button>
+              </Link>
             </div>
           </div>
         </div>

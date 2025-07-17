@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   User,
   Building,
@@ -17,10 +17,13 @@ import {
   Loader2,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import ImageUpload from "@/app/_default/ImageUpload";
 
 interface FormData {
   name: string;
   number: string;
+  branch: string;
   email: string;
   gender: "male" | "female" | "other";
   dateOfBirth: string;
@@ -35,6 +38,7 @@ interface FormData {
 }
 
 export default function CreateMenagement({ branch }: any) {
+  const [image, setImage] = useState("");
   const {
     control,
     handleSubmit,
@@ -44,6 +48,7 @@ export default function CreateMenagement({ branch }: any) {
     defaultValues: {
       name: "",
       number: "",
+      branch: "",
       email: "",
       gender: "" as "male" | "female" | "other",
       dateOfBirth: "",
@@ -54,7 +59,6 @@ export default function CreateMenagement({ branch }: any) {
       role: "" as "menagement" | "admin" | "super-admin",
       position: "" as "শিক্ষক" | "সহকর্মী" | "পরীক্ষক" | "সদস্য",
       nidOrBirthNo: "",
-      image: "",
     },
   });
 
@@ -62,13 +66,15 @@ export default function CreateMenagement({ branch }: any) {
     try {
       const payload = {
         ...data,
-        branch: branch._id,
+        image,
       };
+      console.log(payload);
       await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_V1}/menagement`,
+        `${process.env.NEXT_PUBLIC_SERVER_V1}/management`,
         payload
       );
       toast.success("Management record created successfully!");
+      setImage("");
       reset();
     } catch (error) {
       toast.error("Failed to create management record");
@@ -76,43 +82,13 @@ export default function CreateMenagement({ branch }: any) {
     }
   };
 
-  // const handleImageUpload = (url: string, name: string) => {
-  //   if (name === "mother") {
-  //     setLocalPhoto(url);
-  //   } else if (name === "mother-f-c") {
-  //     setLocalDeathPhoto(url);
-  //   }
-  // };
-
-  //  <div className="md:col-span-2">
-  //         <label className="block text-sm font-medium text-zinc-700 mb-1">
-  //           Death Certificate (if applicable)
-  //         </label>
-  //         <div className="flex flex-wrap gap-3">
-  //           {localDeathPhoto && (
-  //             <div className="h-[135px]">
-  //               <Image
-  //                 width={135}
-  //                 height={135}
-  //                 src={localDeathPhoto}
-  //                 alt="mother death certificate photo"
-  //                 className="h-[135px] rounded-xl"
-  //               />
-  //             </div>
-  //           )}
-  //           <div className="flex items-center gap-4">
-  //             <ImageUpload
-  //               onUpload={(url: string) => handleImageUpload(url, "mother-f-c")}
-  //               user="mother-f-c"
-  //             />
-  //           </div>
-  //         </div>
-  //       </div>
+  const handleImageUpload = (url: string) => {
+    setImage(url);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <Toaster position="top-right" />
-      <div className="max-w-3xl mx-auto">
+      <div className="w-full mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">
@@ -210,6 +186,41 @@ export default function CreateMenagement({ branch }: any) {
                 {errors.email && (
                   <p className="text-red-500 text-xs mt-1">
                     {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Gender */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <User className="h-4 w-4 inline mr-1" /> Branch
+                </label>
+                <div className="relative">
+                  <Controller
+                    name="branch"
+                    control={control}
+                    rules={{ required: "Branch is required" }}
+                    render={({ field }) => (
+                      <select
+                        {...field}
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none ${
+                          errors.gender ? "border-red-500" : "border-gray-300"
+                        }`}
+                      >
+                        <option value="">Select Branch</option>
+                        {branch.map((item: any) => (
+                          <option key={item._id} value={item._id}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  />
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                </div>
+                {errors.gender && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.gender.message}
                   </p>
                 )}
               </div>
@@ -436,22 +447,27 @@ export default function CreateMenagement({ branch }: any) {
 
               {/* Image URL */}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  <User className="h-4 w-4 inline mr-1" /> Profile Image URL
-                  (Optional)
+                <label className="block text-sm font-medium text-zinc-700 mb-1">
+                  Select Image
                 </label>
-                <Controller
-                  name="image"
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="text"
-                      className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Enter image URL"
-                    />
+                <div className="flex flex-wrap gap-3">
+                  {image && (
+                    <div className="h-[135px]">
+                      <Image
+                        width={135}
+                        height={135}
+                        src={image}
+                        alt="mother death certificate photo"
+                        className="h-[135px] rounded-xl"
+                      />
+                    </div>
                   )}
-                />
+                  <div className="flex items-center gap-4">
+                    <ImageUpload
+                      onUpload={(url: string) => handleImageUpload(url)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 

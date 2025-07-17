@@ -1,6 +1,7 @@
 import React from "react";
 import "animate.css";
 import Link from "next/link";
+import { Phone, UserPlus } from "lucide-react";
 
 const RolesHeroBanner = () => {
   return (
@@ -63,18 +64,25 @@ const RolesHeroBanner = () => {
         </p>
 
         <div className="animate__animated animate__fadeIn animate__delay-2s">
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              href="/contact"
-              className="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg font-bold hover:from-emerald-600 hover:to-teal-600 transition-all shadow-md hover:shadow-lg"
-            >
-              ভূমিকা নির্বাচন
+          <div className="flex flex-wrap gap-4">
+            <Link href="/contact">
+              <button className="relative overflow-hidden h-11 px-6 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 group">
+                <span className="relative z-10 flex items-center gap-2">
+                  <Phone size={16} />
+                  যোগাযোগ করুন
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </button>
             </Link>
-            <Link
-              href="/about"
-              className="px-8 py-3 bg-white text-emerald-600 border-2 border-emerald-500 rounded-lg font-bold hover:bg-emerald-50 transition-all shadow-sm hover:shadow-md"
-            >
-              আমাদের সম্পর্কে
+
+            <Link href="/register">
+              <button className="relative overflow-hidden h-11 px-6 rounded-full bg-white text-emerald-600 text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300 group border-2 border-emerald-500">
+                <span className="relative z-10 flex items-center gap-2">
+                  <UserPlus size={16} />
+                  নিবন্ধন
+                </span>
+                <span className="absolute inset-0 bg-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </button>
             </Link>
           </div>
         </div>
