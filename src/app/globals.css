@@ -3,9 +3,9 @@
 @import "animate.css";
 
 * {
-  background: rgb(250, 255, 255);
   color: rgb(37, 37, 37);
 }
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
