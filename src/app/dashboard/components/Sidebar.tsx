@@ -75,6 +75,11 @@ const navItems: NavItem[] = [
         icon: <ClipboardPlus size={16} />,
         href: "/dashboard/create/suggestion",
       },
+      {
+        name: "Manage Center",
+        icon: <ClipboardPlus size={16} />,
+        href: "/dashboard/create/menage-center",
+      },
     ],
   },
   {
