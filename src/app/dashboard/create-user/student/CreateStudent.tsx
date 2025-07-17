@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import ImageUpload from "@/app/_default/ImageUpload";
 
 interface FormData {
   name: string;
@@ -38,55 +39,7 @@ interface FormData {
   studentClass: string;
 }
 
-interface ImageUploadProps {
-  onUpload: (url: string) => void;
-}
-
-// Basic ImageUpload component (replace with your actual implementation)
-const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Simulate image upload (replace with actual Cloudinary or other service)
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      // Example: Replace with your actual upload endpoint
-      // const response = await axios.post("https://api.cloudinary.com/v1_1/your-cloud-name/image/upload", formData);
-      // onUpload(response.data.secure_url);
-
-      // Placeholder: Simulate upload with a fake URL
-      const fakeUrl = URL.createObjectURL(file);
-      onUpload(fakeUrl);
-      toast.success("Image uploaded successfully!");
-    } catch (error) {
-      toast.error("Failed to upload image");
-      console.error("Image upload error:", error);
-    }
-  };
-
-  return (
-    <div className="flex items-center">
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"
-      />
-    </div>
-  );
-};
-
-export default function CreateStudent({
-  institution,
-  branch,
-  group,
-}: {
-  institution: any[];
-  branch: any[];
-  group: any[];
-}) {
+export default function CreateStudent({ institution, branch, group }: any) {
   const [image, setImage] = useState<string>("");
   const {
     control,
@@ -120,7 +73,7 @@ export default function CreateStudent({
 
   // Filter institutions based on selected branch
   const filteredInstitutions = institution.filter(
-    (inst) => inst.branch._id === selectedBranch
+    (inst: any) => inst.branch._id === selectedBranch
   );
 
   // Reset institution when branch changes
@@ -208,7 +161,7 @@ export default function CreateStudent({
                         }`}
                       >
                         <option value="">Select branch</option>
-                        {branch.map((b) => (
+                        {branch.map((b: any) => (
                           <option key={b._id} value={b._id}>
                             {b.name} ({b.id})
                           </option>
@@ -246,7 +199,7 @@ export default function CreateStudent({
                         disabled={!selectedBranch}
                       >
                         <option value="">Select institution</option>
-                        {filteredInstitutions.map((inst) => (
+                        {filteredInstitutions.map((inst: any) => (
                           <option key={inst._id} value={inst._id}>
                             {inst.name} ({inst.id})
                           </option>
@@ -283,7 +236,7 @@ export default function CreateStudent({
                         }`}
                       >
                         <option value="">Select class</option>
-                        {group.map((g) => (
+                        {group.map((g: any) => (
                           <option key={g._id} value={g._id}>
                             {g.name} ({g.id})
                           </option>
