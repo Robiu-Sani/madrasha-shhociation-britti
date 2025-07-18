@@ -148,12 +148,12 @@ export default function AllBranch({ data }: any) {
                 >
                   {branch.isDeleted ? "Inactive" : "Active"}
                 </span>
-                <Link
+                {/* <Link
                   href={`/dashboard/branches/${branch._id}`}
                   className="text-sm text-blue-600 hover:underline"
                 >
                   View Details
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>

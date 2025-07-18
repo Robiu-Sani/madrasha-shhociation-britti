@@ -46,7 +46,7 @@ const navItems: NavItem[] = [
         href: "/dashboard/create/additional",
       },
       {
-        name: "Add Center",
+        name: "Add Branch",
         icon: <ClipboardPlus size={16} />,
         href: "/dashboard/create/branch-center",
       },
@@ -92,7 +92,7 @@ const navItems: NavItem[] = [
         href: "/dashboard/created-data/additional",
       },
       {
-        name: "Added Center",
+        name: "Added Branch",
         icon: <Album size={16} />,
         href: "/dashboard/created-data/branch-center",
       },
@@ -121,6 +121,11 @@ const navItems: NavItem[] = [
         icon: <Album size={16} />,
         href: "/dashboard/created-data/suggestion",
       },
+      {
+        name: "Manage Center Data",
+        icon: <Album size={16} />,
+        href: "/dashboard/created-data/menage-center",
+      },
     ],
   },
   {
@@ -144,17 +149,23 @@ const navItems: NavItem[] = [
     icon: <Users size={20} />,
     subItems: [
       {
-        name: "All Users",
+        name: "All Members",
         icon: <Users size={16} />,
-        href: "/users",
+        href: "/dashboard/user/menagement",
       },
       {
-        name: "Add User",
+        name: "All Student",
         icon: <Users size={16} />,
-        href: "/users/add",
+        href: "/dashboard/user/student",
+      },
+      {
+        name: "All User",
+        icon: <Users size={16} />,
+        href: "/dashboard/user/user",
       },
     ],
   },
+
   {
     name: "Messages",
     icon: <Mail size={20} />,

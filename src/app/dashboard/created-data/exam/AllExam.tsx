@@ -15,6 +15,7 @@ import {
   Plus,
   AlertCircle,
   X,
+  Info,
 } from "lucide-react";
 
 interface Group {
@@ -45,6 +46,8 @@ export default function AllExam({ data }: { data: Exam[] }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [examToDelete, setExamToDelete] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [selectedExam, setSelectedExam] = useState<Exam | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   const handleDelete = async () => {
     if (!examToDelete) return;
@@ -69,6 +72,11 @@ export default function AllExam({ data }: { data: Exam[] }) {
   const openDeleteModal = (examId: string) => {
     setExamToDelete(examId);
     setIsDeleteModalOpen(true);
+  };
+
+  const openDetailsModal = (exam: Exam) => {
+    setSelectedExam(exam);
+    setIsDetailsModalOpen(true);
   };
 
   const formatDate = (dateString: string) => {
@@ -138,6 +146,13 @@ export default function AllExam({ data }: { data: Exam[] }) {
                   </div>
                 </div>
                 <div className="flex space-x-2">
+                  <button
+                    onClick={() => openDetailsModal(exam)}
+                    className="p-2 text-gray-600 hover:text-gray-800 rounded-full hover:bg-gray-50 transition"
+                    title="Details"
+                  >
+                    <Info className="h-5 w-5" />
+                  </button>
                   <Link
                     href={`/dashboard/created-data/exam/${exam._id}`}
                     className="p-2 text-blue-600 hover:text-blue-800 rounded-full hover:bg-blue-50 transition"
@@ -233,6 +248,157 @@ export default function AllExam({ data }: { data: Exam[] }) {
               <Plus className="h-5 w-5 mr-2" />
               Add New Exam
             </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Details Modal */}
+      {isDetailsModalOpen && selectedExam && (
+        <div className="fixed inset-0 bg-[#000000bd] bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-center">
+                  <BookOpen className="h-6 w-6 text-blue-500 mr-2" />
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    {selectedExam.name} - Exam Details
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setIsDetailsModalOpen(false)}
+                  className="p-1 text-gray-400 hover:text-gray-500 rounded-full hover:bg-gray-100 transition"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-500">
+                      Exam Date
+                    </h4>
+                    <p className="text-sm text-gray-700">
+                      {formatDate(selectedExam.date)}
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-500">
+                      Release Date
+                    </h4>
+                    <p className="text-sm text-gray-700">
+                      {formatDate(selectedExam.releaseDate)}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-500">
+                      Registration Start
+                    </h4>
+                    <p className="text-sm text-gray-700">
+                      {formatDate(selectedExam.registrationStart)}
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-500">
+                      Registration End
+                    </h4>
+                    <p className="text-sm text-gray-700">
+                      {formatDate(selectedExam.registrationEnd)}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-medium text-gray-500">Fees</h4>
+                  <p className="text-sm text-gray-700">
+                    {formatCurrency(selectedExam.fees)}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-medium text-gray-500">
+                    Subjects
+                  </h4>
+                  <div className="mt-1 flex flex-wrap gap-2">
+                    {selectedExam.subjects.map((subject, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full"
+                      >
+                        {subject}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-medium text-gray-500">Groups</h4>
+                  <div className="mt-2 space-y-2">
+                    {selectedExam.groups.map((group, index) => (
+                      <div key={index} className="bg-gray-50 p-3 rounded-md">
+                        <h5 className="text-sm font-medium text-gray-700">
+                          {group.groupName}
+                        </h5>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {group.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-medium text-gray-500">Classes</h4>
+                  <div className="mt-1 flex flex-wrap gap-2">
+                    {selectedExam.class.map((cls, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full"
+                      >
+                        {cls}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-500">
+                      Status
+                    </h4>
+                    <span
+                      className={`px-2 py-1 text-xs rounded-full ${
+                        selectedExam.isDeleted
+                          ? "bg-red-100 text-red-800"
+                          : "bg-green-100 text-green-800"
+                      }`}
+                    >
+                      {selectedExam.isDeleted ? "Inactive" : "Active"}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-500">
+                      Last Updated
+                    </h4>
+                    <p className="text-sm text-gray-700">
+                      {formatDate(selectedExam.updatedAt)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => setIsDetailsModalOpen(false)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

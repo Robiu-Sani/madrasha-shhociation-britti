@@ -156,7 +156,7 @@ const HomeFooter = () => {
                 <input
                   type="email"
                   placeholder="আপনার ইমেইল লিখুন"
-                  className="px-3 py-2 rounded-lg bg-white/5 border border-emerald-400/20 focus:outline-none focus:ring-1 focus:ring-emerald-400 focus:border-emerald-400 flex-grow text-sm placeholder-teal-200/70 text-white backdrop-blur"
+                  className="px-3 py-2 rounded-lg placeholder:text-white bg-white/5 border border-emerald-400/20 focus:outline-none focus:ring-1 focus:ring-emerald-400 focus:border-emerald-400 flex-grow text-sm placeholder-teal-200/70 text-white backdrop-blur"
                 />
                 <button
                   type="submit"
