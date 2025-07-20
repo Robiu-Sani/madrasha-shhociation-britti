@@ -15,6 +15,8 @@ import {
   ClipboardPlus,
   Album,
   UserPlus,
+  ReceiptText,
+  CopyPlus,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -162,6 +164,22 @@ const navItems: NavItem[] = [
         name: "All User",
         icon: <Users size={16} />,
         href: "/dashboard/user/user",
+      },
+    ],
+  },
+  {
+    name: "Results",
+    icon: <ReceiptText size={20} />,
+    subItems: [
+      {
+        name: "All Results",
+        icon: <ReceiptText size={16} />,
+        href: "/dashboard/result/added",
+      },
+      {
+        name: "Add Results",
+        icon: <CopyPlus size={16} />,
+        href: "/dashboard/result/add",
       },
     ],
   },
