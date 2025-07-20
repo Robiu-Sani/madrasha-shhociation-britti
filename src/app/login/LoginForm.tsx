@@ -1,13 +1,56 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Lock, User, Eye, EyeOff, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import axios from "axios";
 
 type FormData = {
-  userId: string;
+  registerNo: string;
   password: string;
 };
+
+type UserAddress = {
+  present: string;
+  permanent: string;
+};
+
+type UserData = {
+  address: UserAddress;
+  _id: string;
+  registerNo: string;
+  roll: string;
+  name: string;
+  number: string;
+  role: string;
+  image: string;
+  type: string;
+  expirIn: boolean;
+  gender: string;
+  dateOfBirth: string;
+  isNew: boolean;
+  email: string;
+  isDelated: boolean;
+  temporaryPassword: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+type LoginResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    access_token: string;
+    user: UserData;
+  };
+};
+
+// Global variable to store access token in memory
+let authToken: string | null = null;
 
 export default function LoginForm() {
   const {
@@ -15,15 +58,54 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  const router = useRouter();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
-    console.log(data); // Replace with your login logic
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
-    setIsLoading(false);
+
+    try {
+      const response = await axios.post<LoginResponse>(
+        `${process.env.NEXT_PUBLIC_SERVER_V1}/auth/login`,
+        {
+          registerNo: data.registerNo,
+          password: data.password,
+        }
+      );
+
+      const result = response.data;
+
+      if (!result.success) {
+        throw new Error(result.message || "Login failed");
+      }
+
+      console.log("Login successful:", result);
+
+      // Store access token in memory (not localStorage)
+      authToken = result.data.access_token;
+
+      // Store user data in localStorage
+      if (result.data?.user) {
+        localStorage.setItem("userData", JSON.stringify(result.data.user));
+      }
+
+      // Set default axios authorization header
+      axios.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
+
+      toast.success(result.message || "Login successful");
+
+      // Redirect to student profile
+      router.push("/student_profile");
+    } catch (error: any) {
+      console.error("Login error:", error);
+      const errorMessage =
+        error.response?.data?.message || error.message || "Login failed";
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -37,29 +119,36 @@ export default function LoginForm() {
 
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
-          {/* User ID Field */}
+          {/* Register No Field */}
           <div>
             <label
-              htmlFor="userId"
+              htmlFor="registerNo"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              User ID / Email
+              Register No
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <User className="h-5 w-5 text-gray-400" />
               </div>
               <input
-                id="userId"
+                id="registerNo"
                 type="text"
-                {...register("userId", { required: "User ID is required" })}
+                {...register("registerNo", {
+                  required: "Register number is required",
+                  pattern: {
+                    value: /^STU\d{9}$/,
+                    message:
+                      "Register number must be in format STU followed by 9 digits",
+                  },
+                })}
                 className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Enter your user ID or email"
+                placeholder="Enter your register number (e.g., STU2025010003)"
               />
             </div>
-            {errors.userId && (
+            {errors.registerNo && (
               <p className="mt-1 text-sm text-red-600">
-                {errors.userId.message}
+                {errors.registerNo.message}
               </p>
             )}
           </div>
@@ -143,7 +232,29 @@ export default function LoginForm() {
               className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isLoading ? (
-                "Signing in..."
+                <span className="flex items-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Signing in...
+                </span>
               ) : (
                 <>
                   Sign in <ArrowRight className="ml-2 h-4 w-4" />
@@ -168,4 +279,15 @@ export default function LoginForm() {
       </div>
     </div>
   );
+}
+
+// Export the authToken for use in other components
+export function getAuthToken(): string | null {
+  return authToken;
+}
+
+// Export function to clear the token
+export function clearAuthToken(): void {
+  authToken = null;
+  delete axios.defaults.headers.common["Authorization"];
 }
