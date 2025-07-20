@@ -1,0 +1,9 @@
+exam  as id
+student as id
+addedBy as user id 
+subjects {
+name
+totalNumber
+getNumber
+}
+total

@@ -220,7 +220,7 @@ const ContactSection = () => {
                     },
                   })}
                   className="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="+880 1234 567890"
+                  // placeholder="+880 1234 567890"
                 />
                 {errors.number && (
                   <p className="mt-1 text-sm text-red-600">

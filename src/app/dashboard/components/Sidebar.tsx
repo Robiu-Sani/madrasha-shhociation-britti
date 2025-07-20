@@ -169,7 +169,7 @@ const navItems: NavItem[] = [
   {
     name: "Messages",
     icon: <Mail size={20} />,
-    href: "/messages",
+    href: "/dashboard/messages",
   },
   {
     name: "Notifications",
