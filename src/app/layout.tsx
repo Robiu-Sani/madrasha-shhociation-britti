@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import HomeNavBar from "./_default/HomeNavBar";
 import HomeFooter from "./_default/HomeFooter";
 import AosWrapper from "./AosWrapper";
+import NextTopLoader from "nextjs-toploader";
 
 // ✅ TiroBangla
 const tiroBangla = Tiro_Bangla({
@@ -41,6 +42,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${tiroBangla.variable} antialiased`}
       >
         <AosWrapper>
+          <NextTopLoader
+            color="#008000"
+            showSpinner={true}
+            height={3}
+            zIndex={99999999999}
+          />
           <Toaster />
           <HomeNavBar />
           {children}
