@@ -161,6 +161,7 @@ const HomeNavBar = () => {
               </div>
               <div className="px-3 py-4 space-y-1">
                 {[
+                  ...menuItems,
                   {
                     name: "গোপনীয়তা নীতি",
                     path: "/footer/privacy-policy",
@@ -186,7 +187,6 @@ const HomeNavBar = () => {
                     path: "/footer/exam-center",
                     icon: <ClipboardCheck className="w-4 h-4" />,
                   },
-                  ...menuItems, // Include existing menu items if any
                 ].map((item) => (
                   <Link
                     key={item.path}
