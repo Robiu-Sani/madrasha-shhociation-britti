@@ -68,6 +68,11 @@ body {
   --foreground: #171717;
 }
 
+.scrollnone {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .scrollnone::-webkit-scrollbar {
   display: none;
 }

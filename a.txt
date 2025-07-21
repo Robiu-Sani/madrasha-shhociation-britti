@@ -1,3 +1,7 @@
 student details
 student profile
 make examiner 
+
+
+
+center info
