@@ -17,6 +17,10 @@ import {
   UserPlus,
   ReceiptText,
   CopyPlus,
+  Codesandbox,
+  FileSpreadsheet,
+  GitBranch,
+  FilePlus2,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -183,12 +187,33 @@ const navItems: NavItem[] = [
       },
     ],
   },
-
+  {
+    name: "Institution Student",
+    icon: <Codesandbox size={20} />,
+    subItems: [
+      {
+        name: "Add Student",
+        icon: <FilePlus2 size={16} />,
+        href: "/dashboard/institution/add_student",
+      },
+      {
+        name: "Make Examinee",
+        icon: <GitBranch size={16} />,
+        href: "/dashboard/institution/make_examinee",
+      },
+      {
+        name: "All Students",
+        icon: <FileSpreadsheet size={16} />,
+        href: "/dashboard/institution/all_student",
+      },
+    ],
+  },
   {
     name: "Messages",
     icon: <Mail size={20} />,
     href: "/dashboard/messages",
   },
+
   {
     name: "Notifications",
     icon: <Bell size={20} />,

@@ -14,6 +14,8 @@ interface IBranch {
 interface IInstitutionForm {
   name: string;
   address?: string;
+  pin?: string;
+  password?: string;
   branch?: string;
 }
 
@@ -107,6 +109,69 @@ export default function CreateInstitutionForm() {
             {errors.name && (
               <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
             )}
+          </div>
+
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="pin"
+                className=" text-sm font-medium text-gray-700 mb-1 flex items-center"
+              >
+                <Building className="h-4 w-4 mr-1" />
+                Institution Pin
+              </label>
+              <input
+                id="pin"
+                type="text"
+                {...register("pin", {
+                  required: "Institution pin is required",
+                  minLength: {
+                    value: 3,
+                    message: "Institution pin must be at least 3 characters",
+                  },
+                })}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 ${
+                  errors.pin ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter institution pin"
+              />
+              {errors.pin && (
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.pin.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="password"
+                className=" text-sm font-medium text-gray-700 mb-1 flex items-center"
+              >
+                <Building className="h-4 w-4 mr-1" />
+                Institution password
+              </label>
+              <input
+                id="password"
+                type="text"
+                {...register("password", {
+                  required: "Institution password is required",
+                  minLength: {
+                    value: 3,
+                    message:
+                      "Institution password must be at least 3 characters",
+                  },
+                })}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 ${
+                  errors.password ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter institution password"
+              />
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Institution Address Field */}
