@@ -80,9 +80,7 @@ const ContactData: React.FC<ContactDataProps> = ({ data }) => {
   const handleDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_SERVER_V1}/info/${data.id}`
-      );
+      await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_V1}/info`);
       toast.success("Contact data deleted successfully!");
       // You might want to add a redirect or state update here
     } catch (error) {

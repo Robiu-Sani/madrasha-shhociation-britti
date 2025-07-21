@@ -11,6 +11,11 @@ import {
   University,
   LibraryBig,
   Contact,
+  ShieldCheck,
+  ClipboardList,
+  History,
+  School,
+  ClipboardCheck,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -155,7 +160,34 @@ const HomeNavBar = () => {
                 </button>
               </div>
               <div className="px-3 py-4 space-y-1">
-                {menuItems.map((item) => (
+                {[
+                  {
+                    name: "গোপনীয়তা নীতি",
+                    path: "/footer/privacy-policy",
+                    icon: <ShieldCheck className="w-4 h-4" />,
+                  },
+                  {
+                    name: "পরীক্ষা ব্যবস্থাপনা",
+                    path: "/footer/exam-system",
+                    icon: <ClipboardList className="w-4 h-4" />,
+                  },
+                  {
+                    name: "আমাদের ইতিহাস",
+                    path: "/footer/history",
+                    icon: <History className="w-4 h-4" />,
+                  },
+                  {
+                    name: "সদস্য মাদ্রাসাসমূহ",
+                    path: "/footer/madrasha-member",
+                    icon: <School className="w-4 h-4" />,
+                  },
+                  {
+                    name: "পরীক্ষা সেন্টার",
+                    path: "/footer/exam-center",
+                    icon: <ClipboardCheck className="w-4 h-4" />,
+                  },
+                  ...menuItems, // Include existing menu items if any
+                ].map((item) => (
                   <Link
                     key={item.path}
                     href={item.path}
@@ -190,6 +222,14 @@ const HomeNavBar = () => {
                     লগইন
                   </button>
                 </Link>
+                <a
+                  href="https://code-biruny.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline font-bold text-center  text-sm transition-colors"
+                >
+                  Developed by Code Biruni
+                </a>
               </div>
             </div>
           </div>
