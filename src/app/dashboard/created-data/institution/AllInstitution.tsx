@@ -29,6 +29,8 @@ interface Institution {
   id: string;
   name: string;
   address: string;
+  pin: string;
+  password: string;
   branch: Branch;
   isDeleted: boolean;
   createdAt: string;
@@ -251,6 +253,22 @@ export default function AllInstitution({ data }: { data: Institution[] }) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div className="bg-gray-50 grid grid-cols-2 gap-3 p-4 rounded-lg">
+                  <div className="w-full">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                      Pin
+                    </h3>
+                    <p className="text-gray-700">{selectedInstitution?.pin}</p>
+                  </div>
+                  <div className="w-full">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                      Password
+                    </h3>
+                    <p className="text-gray-700">
+                      {selectedInstitution?.password}
+                    </p>
+                  </div>
+                </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">
                     Address
