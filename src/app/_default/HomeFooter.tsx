@@ -107,9 +107,9 @@ const HomeFooter = () => {
             <ul className="space-y-3">
               {[
                 { name: "আমাদের ইতিহাস", path: "/footer/history" },
-                { name: "সদস্য মাদ্রাসাসমূহ", path: "/madrasha-member" },
-                { name: "পরীক্ষা সেন্টার", path: "/exam-center" },
-                { name: "পরীক্ষা ব্যবস্থাপনা", path: "/exam-system" },
+                { name: "সদস্য মাদ্রাসাসমূহ", path: "/footer/madrasha-member" },
+                { name: "পরীক্ষা সেন্টার", path: "/footer/exam-center" },
+                { name: "পরীক্ষা ব্যবস্থাপনা", path: "/footer/exam-system" },
               ].map((item) => (
                 <li key={item.name}>
                   <Link

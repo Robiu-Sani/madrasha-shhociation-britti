@@ -1,5 +1,10 @@
 import React from "react";
+import CheckInstitutions from "./CheckInstitutions";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <CheckInstitutions />
+    </div>
+  );
 }

@@ -83,7 +83,7 @@ export default function AllStudent() {
     try {
       setDeleting(true);
       await axios.delete(
-        `${process.env.NEXT_PUBLIC_SERVER_V1}/student/${selectedStudent}`
+        `${process.env.NEXT_PUBLIC_SERVER_V1}/student/soft/${selectedStudent}`
       );
 
       // Refresh the data after deletion
