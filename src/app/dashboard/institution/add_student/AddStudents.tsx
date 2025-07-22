@@ -41,7 +41,7 @@ interface FormData {
 
 export default function AddStudents({ branch, classes, group }: any) {
   const [image, setImage] = useState<string>("");
-  const [institution, setInstitution] = useState(localStorage.getItem("ins"));
+  const [institution, setInstitution] = useState<boolean>(false);
   const {
     control,
     handleSubmit,
@@ -74,7 +74,11 @@ export default function AddStudents({ branch, classes, group }: any) {
 
   // Reset institution when branch changes
   useEffect(() => {
-    setInstitution(localStorage.getItem("ins"));
+    const inst = localStorage.getItem("ins");
+    if (inst) {
+      setInstitution(true);
+    }
+
     if (selectedBranch) {
       setValue("institution", "");
     }

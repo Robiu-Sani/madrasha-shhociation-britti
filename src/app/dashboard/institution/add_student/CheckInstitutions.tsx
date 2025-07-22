@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -18,9 +18,14 @@ type ApiResponse = {
 };
 
 export default function CheckInstitutions({ branch, classes, group }: any) {
-  const [isVerified, setIsVerified] = useState<boolean>(
-    localStorage.getItem("ins") ? true : false
-  );
+  const [isVerified, setIsVerified] = useState<boolean>(false);
+
+  useEffect(() => {
+    const ins = localStorage.getItem("ins");
+    if (ins) {
+      setIsVerified(true);
+    }
+  }, []);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {

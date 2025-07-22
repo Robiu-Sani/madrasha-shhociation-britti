@@ -2,7 +2,7 @@ import React from "react";
 import CheckInstitutions from "./CheckInstitutions";
 import axios from "axios";
 
-export default async function page() {
+export default async function Page() {
   try {
     const [group, branch, classes] = await Promise.all([
       axios

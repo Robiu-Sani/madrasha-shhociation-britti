@@ -1,7 +1,5 @@
 student details
 student profile
-make examiner 
 
 
-
-center info
+how many student in exam by institution
