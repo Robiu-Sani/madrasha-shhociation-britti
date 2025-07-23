@@ -372,9 +372,6 @@ export default function StudentDetails() {
                           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Date
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
-                          </th>
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
@@ -385,11 +382,6 @@ export default function StudentDetails() {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               {formatDate(exam.date)}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <button className="text-blue-600 hover:text-blue-800">
-                                View Results
-                              </button>
                             </td>
                           </tr>
                         ))}

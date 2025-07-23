@@ -1,8 +1,6 @@
-student details
 student profile
 user details
 members details
-// - exam details
 
 update get add result student
 get reward student
