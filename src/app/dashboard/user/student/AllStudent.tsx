@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import {
   Search,
@@ -15,8 +14,10 @@ import {
   Check,
   Loader2,
 } from "lucide-react";
+import Link from "next/link";
 
 interface Student {
+  _id: string;
   registerNo: string;
   center: string;
   totalAttendedExams: number;
@@ -33,7 +34,6 @@ export default function AllStudent() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
-  const router = useRouter();
 
   // Fetch students
   useEffect(() => {
@@ -233,17 +233,13 @@ export default function AllStudent() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end space-x-2">
-                          <button
-                            onClick={() =>
-                              router.push(
-                                `/dashboard/student/${student.registerNo}`
-                              )
-                            }
+                          <Link
+                            href={`/dashboard/components/details_page/${student._id}`}
                             className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50"
                             title="View Details"
                           >
                             <Eye className="h-5 w-5" />
-                          </button>
+                          </Link>
                           <button
                             onClick={() => openDeleteModal(student.registerNo)}
                             className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50"

@@ -10,7 +10,7 @@ import {
   FiChevronRight,
   FiCheckCircle,
 } from "react-icons/fi";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Student {
   _id: string;
@@ -42,7 +42,6 @@ interface ExamsResponse {
 }
 
 export default function MakeExamNee() {
-  const router = useRouter();
   const institutionId = localStorage.getItem("ins");
   const [students, setStudents] = useState<Student[]>([]);
   const [exams, setExams] = useState<Exam[]>([]);
@@ -335,13 +334,13 @@ export default function MakeExamNee() {
                         {student.attendedExamsCount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap flex space-x-2">
-                        <button
-                          onClick={() => router.push(`/student/${student._id}`)}
+                        <Link
+                          href={`/dashboard/components/details_page/${student._id}`}
                           className="text-blue-600 hover:text-blue-900"
                           title="View Details"
                         >
                           <FiEye size={18} />
-                        </button>
+                        </Link>
                         <button
                           onClick={() => handleDelete(student._id)}
                           className="text-red-600 hover:text-red-900"

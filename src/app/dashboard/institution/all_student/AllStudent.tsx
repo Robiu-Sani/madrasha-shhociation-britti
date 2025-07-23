@@ -9,7 +9,7 @@ import {
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Student {
   _id: string;
@@ -30,7 +30,6 @@ interface ApiResponse {
 }
 
 export default function AllStudent() {
-  const router = useRouter();
   const institutionId = localStorage.getItem("ins");
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
@@ -65,7 +64,6 @@ export default function AllStudent() {
         totalPages: response.data.meta.totalPages,
       });
     } catch (error) {
-      toast.error("Failed to fetch students");
       console.error(error);
     } finally {
       setLoading(false);
@@ -173,13 +171,13 @@ export default function AllStudent() {
                         {student.attendedExamsCount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap flex space-x-2">
-                        <button
-                          onClick={() => router.push(`/student/${student._id}`)}
+                        <Link
+                          href={`/dashboard/components/details_page/${student._id}`}
                           className="text-blue-600 hover:text-blue-900"
                           title="View Details"
                         >
                           <FiEye size={18} />
-                        </button>
+                        </Link>
                         <button
                           onClick={() => handleDelete(student._id)}
                           className="text-red-600 hover:text-red-900"

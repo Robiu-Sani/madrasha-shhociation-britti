@@ -36,6 +36,7 @@ interface Exam {
   groups: Group[];
   class: string[];
   isDeleted: boolean;
+  totalStudents: number;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -366,6 +367,9 @@ export default function AllExam({ data }: { data: Exam[] }) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
+                    <h4 className="text-sm font-medium text-gray-500">
+                      Attended Student : {selectedExam?.totalStudents || 0}
+                    </h4>
                     <h4 className="text-sm font-medium text-gray-500">
                       Status
                     </h4>
