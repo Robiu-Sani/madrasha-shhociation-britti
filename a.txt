@@ -1,7 +1,9 @@
 student profile
-user details
-members details
+userDetails
+edit user
+edit studnet
 
 update get add result student
 get reward student
+get admid card
 

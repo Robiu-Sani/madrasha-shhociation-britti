@@ -289,7 +289,7 @@ export default function AllUser() {
                             onClick={() =>
                               router.push(`/dashboard/user/${user._id}`)
                             }
-                            className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50"
+                            className="text-blue-600 hidden hover:text-blue-900 p-1 rounded hover:bg-blue-50"
                             title="View Details"
                           >
                             <Eye className="h-5 w-5" />
