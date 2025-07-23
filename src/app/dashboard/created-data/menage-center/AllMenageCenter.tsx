@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   Building,
   Home,
@@ -54,7 +54,7 @@ export default function AllMenageCenter({ data }: { data: Center[] }) {
     try {
       setLoading(true);
       await axios.delete(
-        `${process.env.NEXT_PUBLIC_SERVER_V1}/center/${centerToDelete}`
+        `${process.env.NEXT_PUBLIC_SERVER_V1}/manage-center/${centerToDelete}`
       );
       setCenters(centers.filter((center) => center._id !== centerToDelete));
       toast.success("Center deleted successfully!");
@@ -95,8 +95,6 @@ export default function AllMenageCenter({ data }: { data: Center[] }) {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <Toaster position="top-right" />
-
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>

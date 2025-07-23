@@ -6,8 +6,6 @@ import {
   Home,
   Users,
   Mail,
-  Bell,
-  Settings,
   LogOut,
   Menu,
   ChevronDown,
@@ -21,6 +19,7 @@ import {
   FileSpreadsheet,
   GitBranch,
   FilePlus2,
+  ChartBarBig,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -213,27 +212,10 @@ const navItems: NavItem[] = [
     icon: <Mail size={20} />,
     href: "/dashboard/messages",
   },
-
   {
-    name: "Notifications",
-    icon: <Bell size={20} />,
-    subItems: [
-      {
-        name: "Inbox",
-        icon: <Mail size={16} />,
-        href: "/notifications/inbox",
-      },
-      {
-        name: "Alerts",
-        icon: <Bell size={16} />,
-        href: "/notifications/alerts",
-      },
-    ],
-  },
-  {
-    name: "Settings",
-    icon: <Settings size={20} />,
-    href: "/settings",
+    name: "Count Student",
+    icon: <ChartBarBig size={20} />,
+    href: "/dashboard/count-tudent",
   },
   {
     name: "Logout",
