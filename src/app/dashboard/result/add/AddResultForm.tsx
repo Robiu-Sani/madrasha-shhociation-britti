@@ -182,13 +182,21 @@ export default function AddResultForm() {
     const toastId = toast.loading("Submitting results...");
 
     try {
+      let submittedCount = 0;
+      let skippedCount = 0;
+
       for (const student of students) {
         const subjects = studentResults[student._id];
         const total = calculateTotal(subjects);
 
-        if (subjects.some((sub) => isNaN(sub.getNumber) || sub.getNumber < 0)) {
-          toast.error(`Invalid marks for student ${student.roll}`);
-          continue;
+        // Check if any subject has 0 marks or invalid marks
+        const hasEmptyMarks = subjects.some(
+          (sub) => isNaN(sub.getNumber) || sub.getNumber <= 0
+        );
+
+        if (hasEmptyMarks) {
+          skippedCount++;
+          continue; // Skip this student
         }
 
         const resultData = {
@@ -204,14 +212,25 @@ export default function AddResultForm() {
           `${process.env.NEXT_PUBLIC_SERVER_V1}/result`,
           resultData
         );
+        submittedCount++;
       }
 
-      toast.success("All results submitted successfully!", { id: toastId });
-      // Reset form after successful submission
-      setSelectedExam("");
-      setSelectedClass("");
-      setSelectedExamSubjects([]);
-      setStudentResults({});
+      if (submittedCount === 0) {
+        toast.error(
+          "No results submitted - please fill all subject marks for at least one student",
+          { id: toastId }
+        );
+      } else {
+        toast.success(
+          `Results submitted successfully! ${submittedCount} students processed, ${skippedCount} skipped`,
+          { id: toastId }
+        );
+        // Reset form after successful submission
+        setSelectedExam("");
+        setSelectedClass("");
+        setSelectedExamSubjects([]);
+        setStudentResults({});
+      }
     } catch (error) {
       console.error(error);
       toast.error("Failed to submit some results", { id: toastId });
