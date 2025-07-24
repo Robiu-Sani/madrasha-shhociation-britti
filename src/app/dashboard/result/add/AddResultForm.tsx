@@ -172,7 +172,7 @@ export default function AddResultForm() {
       return;
     }
 
-    const addedBy = JSON.parse(localStorage.getItem("user") || "{}").user?._id;
+    const addedBy = JSON.parse(localStorage.getItem("userData") || "{}")?._id;
     if (!addedBy) {
       toast.error("User not authenticated");
       return;
