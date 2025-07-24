@@ -5,7 +5,7 @@ import DownloadPdfWrapper from "../../components/DownloadPdfWraper";
 export default function page() {
   return (
     <div>
-      <DownloadPdfWrapper>
+      <DownloadPdfWrapper filename="user-data">
         <AllUser />
       </DownloadPdfWrapper>
     </div>

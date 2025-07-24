@@ -60,7 +60,7 @@ export default function DownloadPdfWrapper({
       {/* Download buttons with loading indicators */}
       <div className="absolute top-0 right-0 z-10 px-3 py-1 flex gap-4">
         {/* PDF Download Button */}
-        <div className="group relative cursor-pointer">
+        <div className="group relative md:block hidden cursor-pointer">
           <button
             onClick={downloadAsPDF}
             disabled={isGeneratingPdf}
@@ -79,7 +79,7 @@ export default function DownloadPdfWrapper({
         </div>
 
         {/* Image Download Button */}
-        <div className="group relative cursor-pointer">
+        <div className="group relative md:block hidden cursor-pointer">
           <button
             onClick={handleDownloadImage}
             disabled={isGeneratingImage}
@@ -103,7 +103,7 @@ export default function DownloadPdfWrapper({
         ref={targetRef}
         className="w-full pt-12"
         style={{
-          backgroundColor: "#ffffff",
+          backgroundColor: "#F3F4F6",
           color: "#000000",
         }}
       >

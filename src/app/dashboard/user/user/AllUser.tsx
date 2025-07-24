@@ -298,7 +298,7 @@ export default function AllUser() {
                             onClick={() =>
                               router.push(`/dashboard/user/edit/${user._id}`)
                             }
-                            className="text-indigo-600 hover:text-indigo-900 p-1 rounded hover:bg-indigo-50"
+                            className="text-indigo-600 hidden hover:text-indigo-900 p-1 rounded hover:bg-indigo-50"
                             title="Edit"
                           >
                             <Edit className="h-5 w-5" />

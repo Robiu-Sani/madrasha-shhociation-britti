@@ -19,12 +19,23 @@ interface Student {
   _id: string;
   registerNo: string;
   roll: string;
+  studentClass?: {
+    _id: string;
+    name: string;
+  };
+}
+
+interface Class {
+  _id: string;
+  name: string;
 }
 
 export default function AddResultForm() {
   const [exams, setExams] = useState<Exam[]>([]);
+  const [classes, setClasses] = useState<Class[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [selectedExam, setSelectedExam] = useState<string>("");
+  const [selectedClass, setSelectedClass] = useState<string>("");
   const [selectedExamSubjects, setSelectedExamSubjects] = useState<string[]>(
     []
   );
@@ -36,7 +47,7 @@ export default function AddResultForm() {
 
   useEffect(() => {
     fetchExams();
-    fetchStudents();
+    fetchClasses();
   }, []);
 
   const fetchExams = async () => {
@@ -56,12 +67,30 @@ export default function AddResultForm() {
     }
   };
 
-  const fetchStudents = async () => {
+  const fetchClasses = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_V1}/class`
+      );
+      if (response.data.success) {
+        setClasses(response.data.data.classes);
+      }
+    } catch (error) {
+      toast.error("Failed to fetch classes");
+      console.error(error);
+    }
+  };
+
+  const fetchStudents = async (examId: string, classId?: string) => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_V1}/student/result/all`
-      );
+      const url = `${
+        process.env.NEXT_PUBLIC_SERVER_V1
+      }/student/result/filter?examId=${examId}${
+        classId ? `&classId=${classId}` : ""
+      }`;
+      const response = await axios.get(url);
+
       if (response.data.success) {
         setStudents(response.data.data);
         // Initialize student results
@@ -79,25 +108,41 @@ export default function AddResultForm() {
     }
   };
 
-  const handleExamChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleExamChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const examId = e.target.value;
     setSelectedExam(examId);
+    setSelectedClass(""); // Reset class filter when exam changes
+    await fetchStudents(examId);
 
     const selectedExam = exams.find((exam) => exam._id === examId);
     if (selectedExam) {
       setSelectedExamSubjects(selectedExam.subjects);
-
-      // Initialize subject marks for all students
-      const updatedResults: Record<string, Subject[]> = {};
-      students.forEach((student) => {
-        updatedResults[student._id] = selectedExam.subjects.map((subject) => ({
-          name: subject,
-          totalNumber: 100,
-          getNumber: 0,
-        }));
-      });
-      setStudentResults(updatedResults);
+      initializeStudentResults(selectedExam.subjects);
     }
+  };
+
+  const handleClassChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const classId = e.target.value;
+    setSelectedClass(classId);
+    if (selectedExam) {
+      await fetchStudents(selectedExam, classId);
+      const selectedExamObj = exams.find((exam) => exam._id === selectedExam);
+      if (selectedExamObj) {
+        initializeStudentResults(selectedExamObj.subjects);
+      }
+    }
+  };
+
+  const initializeStudentResults = (subjects: string[]) => {
+    const updatedResults: Record<string, Subject[]> = {};
+    students.forEach((student) => {
+      updatedResults[student._id] = subjects.map((subject) => ({
+        name: subject,
+        totalNumber: 100,
+        getNumber: 0,
+      }));
+    });
+    setStudentResults(updatedResults);
   };
 
   const handleMarksChange = (
@@ -109,7 +154,6 @@ export default function AddResultForm() {
     const numericValue = parseInt(value) || 0;
 
     updatedResults[studentId][subjectIndex].getNumber = numericValue;
-
     setStudentResults(updatedResults);
   };
 
@@ -119,12 +163,7 @@ export default function AddResultForm() {
 
   const determineResultType = (total: number, subjectCount: number): string => {
     const percentage = (total / (subjectCount * 100)) * 100;
-
-    if (percentage < 40) return "fail";
-    if (percentage >= 90) return "rewarded";
-    if (percentage >= 80) return "talentful";
-    if (percentage >= 60) return "general";
-    return "pass";
+    return percentage < 33 ? "fail" : "pass";
   };
 
   const handleSubmit = async () => {
@@ -143,7 +182,6 @@ export default function AddResultForm() {
     const toastId = toast.loading("Submitting results...");
 
     try {
-      // Process each student result one by one
       for (const student of students) {
         const subjects = studentResults[student._id];
         const total = calculateTotal(subjects);
@@ -171,6 +209,7 @@ export default function AddResultForm() {
       toast.success("All results submitted successfully!", { id: toastId });
       // Reset form after successful submission
       setSelectedExam("");
+      setSelectedClass("");
       setSelectedExamSubjects([]);
       setStudentResults({});
     } catch (error) {
@@ -190,23 +229,44 @@ export default function AddResultForm() {
       <h1 className="text-2xl font-bold mb-6">Add Results</h1>
 
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Select Exam
-          </label>
-          <select
-            value={selectedExam}
-            onChange={handleExamChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            disabled={isSubmitting}
-          >
-            <option value="">Select an exam</option>
-            {exams.map((exam) => (
-              <option key={exam._id} value={exam._id}>
-                {exam.name}
-              </option>
-            ))}
-          </select>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Select Exam
+            </label>
+            <select
+              value={selectedExam}
+              onChange={handleExamChange}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled={isSubmitting}
+            >
+              <option value="">Select an exam</option>
+              {exams.map((exam) => (
+                <option key={exam._id} value={exam._id}>
+                  {exam.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Filter by Class (optional)
+            </label>
+            <select
+              value={selectedClass}
+              onChange={handleClassChange}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled={isSubmitting || !selectedExam}
+            >
+              <option value="">All Classes</option>
+              {classes.map((cls) => (
+                <option key={cls._id} value={cls._id}>
+                  {cls.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -218,21 +278,24 @@ export default function AddResultForm() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Roll No.
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Register No.
+                  </th>
+                  <th className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Class
                   </th>
                   {selectedExamSubjects.map((subject, index) => (
                     <th
                       key={index}
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       {subject}
                     </th>
                   ))}
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Total
                   </th>
                 </tr>
@@ -240,16 +303,19 @@ export default function AddResultForm() {
               <tbody className="bg-white divide-y divide-gray-200">
                 {students.map((student) => (
                   <tr key={student._id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-1 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {student.roll}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-1 py-4 whitespace-nowrap text-sm text-gray-500">
                       {student.registerNo}
+                    </td>
+                    <td className="px-1 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {student.studentClass?.name || "-"}
                     </td>
                     {studentResults[student._id]?.map((subject, subIndex) => (
                       <td
                         key={subIndex}
-                        className="px-6 py-4 whitespace-nowrap"
+                        className="px-1 py-4 whitespace-nowrap"
                       >
                         <input
                           type="number"
@@ -268,7 +334,7 @@ export default function AddResultForm() {
                         />
                       </td>
                     ))}
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-1 py-4 whitespace-nowrap text-sm font-medium">
                       {calculateTotal(studentResults[student._id] || [])}
                     </td>
                   </tr>
