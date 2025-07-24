@@ -136,11 +136,6 @@ export default function LoginForm() {
                 type="text"
                 {...register("registerNo", {
                   required: "Register number is required",
-                  pattern: {
-                    value: /^STU\d{9}$/,
-                    message:
-                      "Register number must be in format STU followed by 9 digits",
-                  },
                 })}
                 className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500"
                 placeholder="Enter your register number (e.g., STU2025010003)"
