@@ -20,6 +20,7 @@ import {
   GitBranch,
   FilePlus2,
   ChartBarBig,
+  Anvil,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -204,6 +205,22 @@ const navItems: NavItem[] = [
         name: "All Students",
         icon: <FileSpreadsheet size={16} />,
         href: "/dashboard/institution/all_student",
+      },
+    ],
+  },
+  {
+    name: "Rewarded Student",
+    icon: <Anvil size={20} />,
+    subItems: [
+      {
+        name: "All Institution",
+        icon: <Anvil size={16} />,
+        href: "/dashboard/rewarded/all",
+      },
+      {
+        name: "By Institution",
+        icon: <Anvil size={16} />,
+        href: "/dashboard/rewarded/institution",
       },
     ],
   },
