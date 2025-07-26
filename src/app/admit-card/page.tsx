@@ -1,10 +1,10 @@
 import React from "react";
-import MadrashaMembers from "./MadrashaMembers";
+import AdmitCardForm from "./AdmitCardForm";
 
 export default function page() {
   return (
     <div>
-      <MadrashaMembers />
+      <AdmitCardForm />
     </div>
   );
 }

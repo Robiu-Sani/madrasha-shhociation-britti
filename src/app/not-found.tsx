@@ -1,9 +1,12 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Home, Mail, Phone } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function NotFound() {
+  const router = useRouter();
   return (
     <div className="min-h-screen w-full bg-gradient-to-r from-emerald-50 to-teal-100 flex flex-col items-center justify-center p-6">
       {/* Decorative elements */}
@@ -62,13 +65,13 @@ export default function NotFound() {
             <Phone className="w-4 h-4 mr-2" />
             <span>Need help? Call +880 1234 567890</span>
           </div>
-          <Link
-            href="#"
+          <button
+            onClick={() => router.back()}
             className="text-sm text-emerald-600 hover:text-emerald-800 flex items-center"
           >
             <ArrowLeft className="w-4 h-4 mr-1" />
             Back to previous page
-          </Link>
+          </button>
         </div>
       </div>
     </div>
